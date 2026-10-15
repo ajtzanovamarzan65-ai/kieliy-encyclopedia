@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Алматы облысының киелі жерлері — QR-Энциклопедия</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0b2b22;
+            --primary-light: #144738;
+            --accent-gold: #e5c158;
+            --accent-gold-bright: #ffea9f;
+            --bg-dark: #071712;
+            --card-bg: rgba(18, 51, 41, 0.65);
+            --glass-border: rgba(229, 193, 88, 0.25);
+            --text-light: #f3f7f5;
+            --text-muted: #a3c2b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(229, 193, 88, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(20, 71, 56, 0.4) 0%, transparent 50%),
+                radial-gradient(var(--glass-border) 0.75px, transparent 0.75px);
+            background-size: 100% 100%, 100% 100%, 30px 30px;
+        }
+        header {
+            position: relative;
+            padding: 90px 20px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(7, 23, 18, 0.9) 0%, rgba(11, 43, 34, 0.4) 100%);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .header-ornament { font-size: 2.2rem; color: var(--accent-gold); margin-bottom: 15px; letter-spacing: 5px; }
+        header h1 {
+            font-family: 'Marcellus', serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-gold-bright) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        header p { font-size: 1.2rem; color: var(--text-muted); max-width: 680px; margin: 0 auto 30px; font-weight: 300; }
+        .controls-container { max-width: 1100px; margin: 0 auto 40px; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center; }
+        .search-box { position: relative; flex: 1 1 300px; }
+        .search-box input {
+            width: 100%; padding: 14px 20px 14px 45px;
+            background: rgba(18, 51, 41, 0.8);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px; color: white; font-size: 0.95rem; outline: none;
+            backdrop-filter: blur(10px); transition: all 0.3s;
+        }
+        .search-box input:focus { border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(229, 193, 88, 0.2); }
+        .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--accent-gold); }
+        .filter-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 10px 20px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border); border-radius: 25px;
+            color: var(--text-muted); cursor: pointer; font-size: 0.9rem; transition: all 0.3s;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--accent-gold); color: var(--primary); font-weight: 600; box-shadow: 0 0 15px rgba(229, 193, 88, 0.4); }
+        .grid-container { max-width: 1280px; margin: 0 auto; padding: 0 20px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden;
+            backdrop-filter: blur(12px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; position: relative;
+        }
+        .card:hover {
+            transform: translateY(-10px); border-color: var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(229, 193, 88, 0.2);
+        }
+        .card-img-wrapper { position: relative; height: 240px; overflow: hidden; }
+        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .card:hover .card-img-wrapper img { transform: scale(1.1); }
+        .card-badge {
+            position: absolute; top: 15px; left: 15px; background: rgba(11, 43, 34, 0.85);
+            border: 1px solid var(--accent-gold); color: var(--accent-gold-bright);
+            padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; backdrop-filter: blur(5px);
+        }
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-title { font-family: 'Marcellus', serif; font-size: 1.4rem; color: white; margin-bottom: 12px; line-height: 1.3; }
+        .card-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px; }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid rgba(229, 193, 88, 0.15); }
+        .qr-preview { display: flex; align-items: center; cursor: pointer; }
+        .qr-preview img { width: 50px; height: 50px; border-radius: 8px; border: 1px solid var(--accent-gold); padding: 2px; background: white; transition: transform 0.3s; }
+        .qr-preview:hover img { transform: scale(1.15); }
+        .btn-more {
+            padding: 10px 18px; background: linear-gradient(135deg, var(--accent-gold), #b88e28);
+            color: var(--primary); border: none; border-radius: 12px; font-weight: 700; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-more:hover { background: linear-gradient(135deg, var(--accent-gold-bright), var(--accent-gold)); box-shadow: 0 0 15px rgba(229, 193, 88, 0.5); transform: translateY(-2px); }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 10, 8, 0.85); backdrop-filter: blur(15px); z-index: 1000;
+            display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--primary); border: 1px solid var(--accent-gold); border-radius: 24px;
+            max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;
+            transform: scale(0.8) translateY(30px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+        .modal-close {
+            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-gold); border-radius: 50%; color: white; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s;
+        }
+        .modal-close:hover { background: var(--accent-gold); color: var(--primary); }
+        .modal-body { padding: 30px; }
+        .modal-img { width: 100%; height: 350px; object-fit: cover; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--glass-border); }
+        .modal-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+        .modal-qr-box {
+            background: rgba(18, 51, 41, 0.8); border: 1px dashed var(--accent-gold); border-radius: 16px;
+            padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .modal-qr-box img { width: 140px; height: 140px; background: white; padding: 8px; border-radius: 12px; margin-bottom: 15px; }
+        .btn-download {
+            padding: 8px 16px; background: rgba(229, 193, 88, 0.15); border: 1px solid var(--accent-gold);
+            color: var(--accent-gold); border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;
+        }
+        .btn-download:hover { background: var(--accent-gold); color: var(--primary); }
+        footer { text-align: center; padding: 40px 20px; background: rgba(7, 23, 18, 0.95); border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .modal-grid { grid-template-columns: 1fr; }
+            .modal-img { height: 220px; }
+            .grid-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-ornament">❖ ❖ ❖</div>
+        <h1>Алматы облысының киелі жерлері</h1>
+        <p>Цифрлық QR-энциклопедия жобасы — өлке тарихы мен рухани мұрасын заманауи форматта тану</p>
+    </header>
+
+    <div class="controls-container">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Нысан атауын немесе сипаттамасын іздеу..." onkeyup="filterCards()">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCategory('all')">Барлығы</button>
+            <button class="filter-btn" onclick="filterCategory('petroglyph')">Петроглифтер</button>
+            <button class="filter-btn" onclick="filterCategory('city')">Қалашықтар</button>
+            <button class="filter-btn" onclick="filterCategory('mound')">Қорғандар</button>
+            <button class="filter-btn" onclick="filterCategory('museum')">Музейлер</button>
+        </div>
+    </div>
+
+    <div class="grid-container" id="cardsGrid">
+
+        <!-- Card 1 -->
+        <div class="card" data-category="museum" data-title="таңбалы сапар орталығы">
+            <div class="card-img-wrapper">
+                <img src="1.jpg" alt="Таңбалы сапар орталығы">
+                <div class="card-badge"><i class="fa-solid fa-archway"></i> Сапар орталығы</div>
+            </div>
+            <div class="card-content">
+                <div>
+                    <h3 class="card-title">Таңбалы сапар орталығы</h3>
+                    <p class="card-desc">Жамбыл ауданында орналасқан тарихи-мәдени орталық. Көне петроглифтер мен тарихи ландшафтты қорғауға арналған инфрақұрылымдық визит-орталық.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="qr-preview" onclick="openModal('1.jpg', 'Таңбалы сапар орталығы', 'Жамбыл ауданы, Алматы облысы', 'Таңбалы археологиялық ландшафтының кіреберіс сапар орталығы.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Tanbaly_Sapar_Ortalygy')">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Tanbaly_Sapar_Ortalygy" alt="QR">
+                    </div>
+                    <button class="btn-more" onclick="openModal('1.jpg', 'Таңбалы сапар орталығы', 'Жамбыл ауданы, Алматы облысы', 'Таңбалы археологиялық ландшафтының кіреберіс сапар орталығы.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Tanbaly_Sapar_Ortalygy')">
+                        Толығырақ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card" data-category="museum" data-title="мұражай залы">
+            <div class="card-img-wrapper">
+                <img src="2.jpg" alt="Мұражай экспозициясы">
+                <div class="card-badge"><i class="fa-solid fa-landmark"></i> Экспозиция</div>
+            </div>
+            <div class="card-content">
+                <div>
+                    <h3 class="card-title">Мұражай залы мен жәдігерлер</h3>
+                    <p class="card-desc">Археологиялық қазба жұмыстары кезінде табылған көне тас мүсіндер, балбалдар мен тұрмыстық бұйымдар қойылған көрме залы.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="qr-preview" onclick="openModal('2.jpg', 'Мұражай залы мен жәдігерлер', 'Сапар орталығының экспозициялық залы', 'Археологиялық тапсырмалар мен тас мүсіндер сақталған көрме залы.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Museum_Exhibition_Hall')">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Museum_Exhibition_Hall" alt="QR">
+                    </div>
+                    <button class="btn-more" onclick="openModal('2.jpg', 'Мұражай залы мен жәдігерлер', 'Сапар орталығының экспозициялық залы', 'Археологиялық тапсырмалар мен тас мүсіндер сақталған көрме залы.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Museum_Exhibition_Hall')">
+                        Толығырақ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card" data-category="petroglyph" data-title="тамғалы тас">
+            <div class="card-img-wrapper">
+                <img src="3.jpg" alt="Тамғалы тас">
+                <div class="card-badge"><i class="fa-solid fa-mountain"></i> Қорық-музей</div>
+            </div>
+            <div class="card-content">
+                <div>
+                    <h3 class="card-title">«Таңбалы тас» кешені</h3>
+                    <p class="card-desc">Іле өзенінің жағалауындағы табиғи-ашық аспан астындағы музей. Тарихи жартас суреттері мен бейнелерді қорғайтын киелі нысан.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="qr-preview" onclick="openModal('3.jpg', '«Таңбалы тас» кешені', 'Қонаев қаласы маңы, Іле өзені', 'Іле өзенінің бойында орналасқан әйгілі археологиялық кешен.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Tamgaly_Tas_Complex')">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Tamgaly_Tas_Complex" alt="QR">
+                    </div>
+                    <button class="btn-more" onclick="openModal('3.jpg', '«Таңбалы тас» кешені', 'Қонаев қаласы маңы, Іле өзені', 'Іле өзенінің бойында орналасқан әйгілі археологиялық кешен.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Tamgaly_Tas_Complex')">
+                        Толығырақ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card" data-category="petroglyph" data-title="жартастағы бейнелер будда">
+            <div class="card-img-wrapper">
+                <img src="4.jpg" alt="Жартастағы бейнелер">
+                <div class="card-badge"><i class="fa-solid fa-scroll"></i> Петроглиф</div>
+            </div>
+            <div class="card-content">
+                <div>
+                    <h3 class="card-title">Жартастағы буддалық бейнелер</h3>
+                    <p class="card-desc">Іле өзенінің тік жартастарында сақталған Будда Бурхан, Манла және бодхисаттвалардың бейнелері мен көне тибеттік жазулар.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="qr-preview" onclick="openModal('4.jpg', 'Жартастағы буддалық бейнелер', 'Тамғалы тас шатқалы', 'Орта ғасырлар мен кейінгі дәуірлердегі рухани-мәдени байланыстарды білдіретін жартас өнері.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Tamgaly_Tas_Petroglyphs')">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Tamgaly_Tas_Petroglyphs" alt="QR">
+                    </div>
+                    <button class="btn-more" onclick="openModal('4.jpg', 'Жартастағы буддалық бейнелер', 'Тамғалы тас шатқалы', 'Орта ғасырлар мен кейінгі дәуірлердегі рухани-мәдени байланыстарды білдіретін жартас өнері.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Tamgaly_Tas_Petroglyphs')">
+                        Толығырақ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card" data-category="city" data-title="талғар талхир қалашығы">
+            <div class="card-img-wrapper">
+                <img src="5.jpg" alt="Талғар қалашығы">
+                <div class="card-badge"><i class="fa-solid fa-city"></i> Ортағасырлық қала</div>
+            </div>
+            <div class="card-content">
+                <div>
+                    <h3 class="card-title">Талғар (Талхир) қалашығы</h3>
+                    <p class="card-desc">VIII–XIV ғасырлардағы Ұлы Жібек жолы бойында дамыған ірі қолөнер мен сауда орталығы. Қала сәулетінің қалдықтары сақталған.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="qr-preview" onclick="openModal('5.jpg', 'Талғар (Талхир) қалашығы', 'Талғар қаласының оңтүстігі', 'ЮНЕСКО Дүниежүзілік мұралар тізіміне енген ортағасырлық қала.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Talgar_Settlement_View')">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Talgar_Settlement_View" alt="QR">
+                    </div>
+                    <button class="btn-more" onclick="openModal('5.jpg', 'Талғар (Талхир) қалашығы', 'Талғар қаласының оңтүстігі', 'ЮНЕСКО Дүниежүзілік мұралар тізіміне енген ортағасырлық қала.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Talgar_Settlement_View')">
+                        Толығырақ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card" data-category="city" data-title="талғар ескерткіш тақтасы">
+            <div class="card-img-wrapper">
+                <img src="6.jpg" alt="Талғар тақтасы">
+                <div class="card-badge"><i class="fa-solid fa-shield-halved"></i> Қорғалатын нысан</div>
+            </div>
+            <div class="card-content">
+                <div>
+                    <h3 class="card-title">Талғар қалашығы мемлекеттік белгісі</h3>
+                    <p class="card-desc">VIII–XIV ғасырлар аралығында болған қалашықтың мемлекеттік қорғауда екендігін айғақтайтын ресми ақпараттық ескерткіш тақта.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="qr-preview" onclick="openModal('6.jpg', 'Талғар қалашығы белгісі', 'Талғар археологиялық аймағы', 'Мемлекеттік қорғауға алынған ескерткіш кіреберісі.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Talgar_Plaque')">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Talgar_Plaque" alt="QR">
+                    </div>
+                    <button class="btn-more" onclick="openModal('6.jpg', 'Талғар қалашығы белгісі', 'Талғар археологиялық аймағы', 'Мемлекеттік қорғауға алынған ескерткіш кіреберісі.', 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Talgar_Plaque')">
+                        Толығырақ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="card" data-category="mound" data-title="бесшатыр менгирлер тастар">
+            <div class="card-img-wrapper">
